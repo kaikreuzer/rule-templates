@@ -1,0 +1,39 @@
+[  
+   {  
+      "uid":"kaikreuzer:firealarm",
+      "label":"Fire Alarm",
+      "description":"Checks all temperature sensors for abnormal values and activates an alarm.",
+      "configDescriptions":[  
+         {  
+            "name":"temperature",
+            "type":"TEXT",
+            "context":"item",
+            "label":"Temperature Group",
+            "description":"The group of all temperature sensors",
+            "required":true
+         },
+         {  
+            "name":"threshold",
+            "type":"decimal",
+            "label":"Threshold",
+            "description":"Alarm will be triggered if one sensor exceeds this value.",
+            "required":false,
+            "advanced":true
+         }
+      ],
+  "triggers": [
+    {
+      "id": "1",
+      "label": "a new temperature value is received",
+      "description": "",
+      "configuration": {
+        "itemName": "${temperature}"
+      },
+      "type": "core.ItemStateUpdateTrigger"
+    }
+  ],
+  "conditions": [],
+  "actions": []
+}
+]
+
