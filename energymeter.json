@@ -8,6 +8,12 @@
             "name":"consumption",
             "type":"TEXT",
             "context":"item",
+            "filterCriteria":[
+              {
+                "name": "type",
+                "value": "Number"
+              }
+            ],
             "label":"Consumption Item",
             "description":"Data source for current consumption",
             "required":true
@@ -16,6 +22,12 @@
             "name":"light",
             "type":"TEXT",
             "context":"item",
+            "filterCriteria":[
+              {
+                "name": "type",
+                "value": "Color"
+              }
+            ],
             "label":"Color Item",
             "description":"Color light to use for visualisation",
             "required":true
@@ -24,7 +36,7 @@
             "name":"max",
             "type":"INTEGER",
             "label":"Max. consumption",
-            "description":"Maximum value (in W) for red light",
+            "description":"Maximum value for red light",
             "required":true,
             "defaultValue":1500
          }
@@ -49,7 +61,7 @@
       "description": "Sets the color to a value in the range from green (low consumption) to red (high consumption)",
       "configuration": {
         "type": "application/javascript",
-        "script": "var power = trigger.event.getItemState().toString()\nvar percent = power / (${max} / 100) \nif(percent < 0) percent = 0\nvar hue = 120 - percent\nevents.sendCommand('${light}', hue +',100,100')"
+        "script": "var power = newState.toString()\nvar percent = power / (${max} / 100) \nif(percent < 0) percent = 0\nvar hue = 120 - percent * 1.2\nevents.sendCommand('${light}', hue +',100,100')"
       },
       "type": "script.ScriptAction"
     }
