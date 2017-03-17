@@ -14,26 +14,36 @@
          },
          {  
             "name":"threshold",
-            "type":"decimal",
+            "type":"INTEGER",
             "label":"Threshold",
             "description":"Alarm will be triggered if one sensor exceeds this value.",
-            "required":false,
-            "advanced":true
+            "required":true
          }
       ],
   "triggers": [
     {
       "id": "1",
-      "label": "a new temperature value is received",
+      "label": "a room temperature changes",
       "description": "",
       "configuration": {
         "itemName": "${temperature}"
       },
-      "type": "core.ItemStateUpdateTrigger"
+      "type": "core.ItemStateChangeTrigger"
     }
   ],
   "conditions": [],
-  "actions": []
+  "actions": [
+    {
+      "inputs": {},
+      "id": "2",
+      "label": "activate alarm if any sensor has a critical value",
+      "description": "Sends ON to all items tagged with 'Alarm'",
+      "configuration": {
+        "type": "application/javascript",
+        "script": "var temperatures = items.get('${temperature}').getAllMembers()\nvar alarm = false\ntemperatures.forEach(function(element) {\n  if(element.state > ${threshold}) alarm = true\n});\nif(alarm==true) {\n  items.getItemsByTagAndType('Switch', 'Alarm').forEach(function(element) {\n    element.send(ON)\n  });\n}"
+      },
+      "type": "script.ScriptAction"
+    }
+  ]
 }
 ]
-
