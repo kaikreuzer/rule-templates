@@ -68,7 +68,7 @@
       "description": "Plays a doorbell sound and flashes the light if at home.\nPlays a dog barking sound if not at home.",
       "configuration": {
         "type": "application/javascript",
-        "script": "var presence = states.get('${presence}') == ON\nif(presence) {\n  var startTime = new Date().getMilliseconds()\n  var oldLightState = states.get('${light}').toString()\n  if(oldLightState != '') {\n    var onState = ON\n    if(oldLightState.toString().contains(',')) onState = '0,100,100' // red as HSB\n    if(oldLightState != '') events.sendCommand('${light}', onState)\n  }\n  audio.playFile('doorbell.mp3')\n  var endTime = new Date().getMilliseconds()\n  if(endTime < startTime + 1000) {\n    java.lang.Thread.sleep(startTime + 1000 - endTime)\n  }\n  events.sendCommand('${light}', oldLightState)\n} else {\n  audio.playFile('barking.mp3')\n}"
+        "script": "var presence = states.get('{{presence}}') == ON\nif(presence) {\n  var startTime = new Date().getMilliseconds()\n  var oldLightState = states.get('{{light}}').toString()\n  if(oldLightState != '') {\n    var onState = ON\n    if(oldLightState.toString().contains(',')) onState = '0,100,100' // red as HSB\n    if(oldLightState != '') events.sendCommand('{{light}}', onState)\n  }\n  audio.playFile('doorbell.mp3')\n  var endTime = new Date().getMilliseconds()\n  if(endTime < startTime + 1000) {\n    java.lang.Thread.sleep(startTime + 1000 - endTime)\n  }\n  events.sendCommand('{{light}}', oldLightState)\n} else {\n  audio.playFile('barking.mp3')\n}"
       },
       "type": "script.ScriptAction"
     }

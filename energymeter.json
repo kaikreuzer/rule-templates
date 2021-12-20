@@ -47,7 +47,7 @@
       "label": "Current consumption changes",
       "description": "Triggers whenever the current consumption changes its value",
       "configuration": {
-        "itemName": "${consumption}"
+        "itemName": "{{consumption}}"
       },
       "type": "core.ItemStateChangeTrigger"
     }
@@ -61,7 +61,7 @@
       "description": "Sets the color to a value in the range from green (low consumption) to red (high consumption)",
       "configuration": {
         "type": "application/javascript",
-        "script": "var power = newState.toString()\nvar percent = power / (${max} / 100) \nif(percent < 0) percent = 0\nvar hue = 120 - percent * 1.2\nevents.sendCommand('${light}', hue +',100,100')"
+        "script": "var power = newState.toString()\nvar percent = power / ({{max}} / 100) \nif(percent < 0) percent = 0\nvar hue = 120 - percent * 1.2\nevents.sendCommand('{{light}}', hue +',100,100')"
       },
       "type": "script.ScriptAction"
     }
